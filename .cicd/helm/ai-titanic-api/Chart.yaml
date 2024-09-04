@@ -1,0 +1,7 @@
+apiVersion: v2
+version: "1.0"
+name: ai-titanic-api
+description: A Helm chart for ai-titanic Api
+maintainers:
+  - name: Marcin Narloch
+    email: marcin.narloch@qbituniverse.com

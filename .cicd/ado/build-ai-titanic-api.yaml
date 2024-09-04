@@ -1,0 +1,65 @@
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - .cicd/docker/Dockerfile-ai-titanic-api
+    - .cicd/ado/build-ai-titanic-api.yaml
+    - src/model/models/ai_titanic_model.rds
+
+pr: none
+
+resources:
+  repositories:
+  - repository: platform-ops
+    type: github
+    name: qbituniverse/platform-ops
+    endpoint: qbituniverse
+
+stages:
+- stage: DockerBuild
+  displayName: 'Build Multi-Arch Docker Images for Api'
+  pool:
+    name: self-hosted-ado-agents
+    demands:
+    - agent.name -equals ado-agent-amd64
+  variables:
+    imageDockerfile: .cicd/docker/Dockerfile-ai-titanic-api
+    imageRepository: qbituniverse/ai-titanic-api
+    imageTag: $(imageVersion).$(Build.BuildId)
+    imageVersion: 'N/A'
+    imageArchitecture: linux/amd64,linux/arm64
+  jobs:
+  - job: DockerBuild
+    displayName: 'Build Multi-Arch Docker Images for Api'
+    timeoutInMinutes: 0
+    steps:
+    - template: azure-devops/builds/assign-build-number.yaml@platform-ops
+      parameters:
+        imageDockerfile: $(imageDockerfile)
+        imageTag: $(imageTag)
+
+    - template: azure-devops/builds/dockerhub-login.yaml@platform-ops
+
+    - template: azure-devops/builds/create-buildx.yaml@platform-ops
+      parameters:
+        buildNumber: $(Build.BuildId)
+
+    - template: azure-devops/builds/build-push-docker-image-multi-arch.yaml@platform-ops
+      parameters:
+        imageDockerfile: $(imageDockerfile)
+        imageRepository: $(imageRepository)
+        imageTag: $(imageTag)
+        imageArchitecture: $(imageArchitecture)
+
+    - template: azure-devops/builds/build-push-docker-image-multi-arch.yaml@platform-ops
+      parameters:
+        imageDockerfile: $(imageDockerfile)
+        imageRepository: $(imageRepository)
+        imageTag: latest
+        imageArchitecture: $(imageArchitecture)
+
+    - template: azure-devops/builds/delete-buildx.yaml@platform-ops
+      parameters:
+        buildNumber: $(Build.BuildId)

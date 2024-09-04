@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>1f0e9e3b-d23e-47ec-8acc-a20eb3d3c8d9</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileFile>../.cicd/docker/Dockerfile-ai-titanic-webapp</DockerfileFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove=".cicd\**" />
+    <Compile Remove="automation - Copy\**" />
+    <Compile Remove="wwwroot\NewFolder\**" />
+    <Content Remove=".cicd\**" />
+    <Content Remove="automation - Copy\**" />
+    <Content Remove="wwwroot\NewFolder\**" />
+    <EmbeddedResource Remove=".cicd\**" />
+    <EmbeddedResource Remove="automation - Copy\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder\**" />
+    <None Remove=".cicd\**" />
+    <None Remove="automation - Copy\**" />
+    <None Remove="wwwroot\NewFolder\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+</Project>

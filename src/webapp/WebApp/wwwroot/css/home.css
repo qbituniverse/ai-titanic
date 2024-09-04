@@ -1,0 +1,40 @@
+#inputSexSlider .slider-track-low, 
+#inputSexSlider .slider-track-high, 
+#inputSexSlider .slider-selection,
+#inputPclassSlider .slider-track-low, 
+#inputPclassSlider .slider-track-high, 
+#inputPclassSlider .slider-selection {
+    background: none;
+}
+
+#inputSexSlider .slider-tick,
+#inputPclassSlider .slider-tick {
+    background: #8ac1ef;
+}
+
+.model-inputs {
+    margin-right: 10px;
+}
+
+.model-inputs .panel-body {
+    padding: 0;
+}
+
+.model-inputs .panel-body .panel-item-input {
+    border-bottom: 1px solid #ddd;
+    height: 110px;
+}
+
+.model-inputs .panel-body .panel-item-input h4 {
+    background-color: #f5f5f5;
+    margin: 0 0 15px 0;
+    padding: 10px 0;
+}
+
+.green {
+    background-color: #ccffcc;
+}
+
+.red {
+    background-color: #ffc6b3;
+}

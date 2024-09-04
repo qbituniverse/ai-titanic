@@ -1,0 +1,15 @@
+FROM qbituniverse/ai-r-core-rstudio:4.3.0.412-java
+
+LABEL version="4.3.0" \
+	  description="Image to create R Studio environment for the ai-titanic project" \
+	  maintainer="marcin.narloch@qbituniverse.com"
+
+RUN R -e "install.packages(c('gmodels', 'e1071', 'caret', 'caretEnsemble', 'C50', 'vcd', 'FSelector', 'rpart', 'party', 'RWeka', 'nnet', 'kernlab', 'naivebayes', 'fastAdaboost'), lib = '/usr/local/lib/R/site-library')"
+
+RUN rm -rf /usr/lib/R/library && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
+
+COPY /src/model/code/ /home/rstudio/code/
+COPY /src/model/input/ /home/rstudio/input/
+COPY /src/model/models/ /home/rstudio/models/
+
+RUN mkdir -p /home/rstudio/output && chown -R rstudio /home

@@ -1,0 +1,7 @@
+namespace: "ai-titanic"
+name: "ai-titanic-webapp"
+image: "qbituniverse/ai-titanic-webapp:latest"
+host: "web.ai-titanic.localhost"
+configuration:
+  Environment: "Development"
+  BaseUri: "http://ai-titanic-api.ai-titanic.svc.cluster.local"

@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "About";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="model-list panel panel-default center col-md-11">
+        <div class="panel-heading top">
+            <h3>About @ViewData["ApplicationName"]</h3>
+        </div>
+        <div class="panel-body">
+            <p><b>@ViewData["ApplicationName"]</b> is a web-based <b>C# ASPNET Core</b> interface and <b>R Code trained model</b> exposed via a <b>R Plumber REST API</b> in the backend.</p>
+            <table class="table table-hover left">
+                <tr>
+                    <td class="col-sm-3"><a href="https://www.kaggle.com/c/titanic" target="_blank">Kaggle Titanic Project</a></td>
+                    <td class="col-sm-9">This is where it all started with a Titanic Kaggle challenge.</td>
+                </tr>
+                <tr>
+                    <td class="col-sm-3"><a href="https://github.com/qbituniverse/ai-titanic" target="_blank">GitHub Source Code</a></td>
+                    <td class="col-sm-9">
+                        <p>GitHub Repository where you'll discover the entire source code for this project.</p>
+                        <ul>
+                            <li><b>R Code</b> to how you how to train your own model</li>
+                            <li><b>R Studio</b> environment to train your own model</li>
+                            <li><b>R Plumber REST API</b> to expose the model for use in your applications</li>
+                            <li><b>C# WebApp ASPNET Core</b> to interact with the model via GUI</li>
+                            <li><b>CICD templates and scripts</b> to get you up and running with this code</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-sm-3"><a href="https://github.com/qbituniverse/ai-titanic" target="_blank">Website and Docs</a></td>
+                    <td class="col-sm-9">Website and documentation explaining the project, how to use it and run it yourself.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

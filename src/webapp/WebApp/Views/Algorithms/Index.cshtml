@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Algorithms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="model-list panel panel-default center col-md-11">
+        <div class="panel-heading top">
+            <h3>Algorithms behind @ViewData["ApplicationName"]</h3>
+        </div>
+        <div class="panel-body">
+            <div id="algorithmsList"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            loadAlgorithms();
+        });
+    </script>
+}
