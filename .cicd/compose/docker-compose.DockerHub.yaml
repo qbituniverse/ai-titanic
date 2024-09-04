@@ -1,0 +1,27 @@
+version: '3'
+services:
+  api:
+    image: qbituniverse/ai-titanic-api:latest
+    container_name: ai-titanic-api
+    ports:
+      - 8011:8000
+    tty: true
+    networks:
+      - ai-titanic-bridge
+
+  webapp:
+    image: qbituniverse/ai-titanic-webapp:latest
+    depends_on:
+      - api
+    container_name: ai-titanic-webapp
+    environment:
+      - WebApp__AiApi__BaseUri=http://ai-titanic-api:8000
+    ports:
+      - 8010:8080
+    tty: true
+    networks:
+      - ai-titanic-bridge
+
+networks:
+  ai-titanic-bridge:
+    driver: bridge

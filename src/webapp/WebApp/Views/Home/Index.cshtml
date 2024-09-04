@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = ViewData["ApplicationName"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="model-inputs panel panel-default center col-md-4">
+        <div class="panel-heading top">
+            <h3>Model Inputs</h3>
+        </div>
+        <div class="panel-body">
+            <div class="panel-item-input">
+                <h4>Gender</h4>
+                <input id="inputSex" data-slider-id="inputSexSlider" type="text" data-slider-ticks="[1, 2]" data-slider-ticks-snap-bounds="1" data-slider-ticks-labels='["Male", "Female"]'/>
+            </div>
+            <div class="panel-item-input">
+                <h4>Age</h4>
+                <input id="inputAge" type="text" data-slider-min="0" data-slider-max="80" data-slider-step="1" data-slider-value="20"/>
+            </div>
+            <div class="panel-item-input">
+                <h4>Ticket Class</h4>
+                <input id="inputPclass" data-slider-id="inputPclassSlider" type="text" data-slider-ticks="[1, 2, 3]" data-slider-ticks-snap-bounds="1" data-slider-ticks-labels='["1st", "2nd", "3rd"]'/>
+            </div>
+            <div class="panel-item-input">
+                <h4>Fare</h4>
+                <input id="inputFare" type="text" data-slider-min="0" data-slider-max="520" data-slider-step="0.25" data-slider-value="15"/>
+            </div>
+            <div class="panel-item-input">
+                <h4>Number of Siblings / Spouses on Board</h4>
+                <input id="inputSibsp" type="text" data-slider-ticks="[0, 1, 2, 3, 4, 5, 6, 7, 8]" data-slider-ticks-snap-bounds="1" data-slider-ticks-labels='["0", "1", "2", "3", "4", "5", "6", "7", "8"]'/>
+            </div>
+            <div class="panel-item-input">
+                <h4>Number of Parents / Children on Board</h4>
+                <input id="inputParch" type="text" data-slider-ticks="[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" data-slider-ticks-snap-bounds="1" data-slider-ticks-labels='["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]'/>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="m-top-30">
+                <button id="btnPredict" type="submit" class="btn btn-primary btn-lg btn-block">Predict</button>
+            </div>
+            <div class="m-top-30">
+                <button id="btnClear" type="submit" class="btn btn-primary btn-lg btn-block">Reset Inputs</button>
+            </div>
+        </div>
+    </div>
+    <div class="model-outputs panel panel-default center col-md-7">
+        <div class="panel-heading top">
+            <h3>Model Outputs</h3>
+        </div>
+        <div class="panel-body">
+            <div id="predict-loader" hidden>
+                <img src="~/images/loading.gif" style="width: 150px; height: auto;" alt="Loading...">
+            </div>
+            <div id="predict-waiter">
+                <img src="~/images/predict.gif" style="width: 498px; height: 480px;" alt="Predict...">
+            </div>
+            <div id="predict-results" hidden>
+                <div>
+                    <div id="predictionSurvived" class="panel-group"></div>
+                </div>
+                <div>
+                    <div id="predictionConfidence" class="panel-group"></div>
+                </div>
+                <div>
+                    <div id="predictionModels" class="panel-group"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            loadHome();
+        });
+    </script>
+}

@@ -1,0 +1,191 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: demo-aks@domain.com
+    privateKeySecretRef:
+      name: letsencrypt
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+          podTemplate:
+            spec:
+              nodeSelector:
+                "kubernetes.io/os": linux
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-titanic-demo-webapp
+  namespace: ai-titanic-demo
+  labels:
+    app: ai-titanic-demo-webapp
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  selector:
+    matchLabels:
+      app: ai-titanic-demo-webapp
+  template:
+    metadata:
+      labels:
+        app: ai-titanic-demo-webapp
+    spec:
+      containers:
+      - name: ai-titanic-demo-webapp
+        image: qbituniverse/ai-titanic-webapp:latest
+        securityContext:
+          privileged: false
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+            add: ["NET_BIND_SERVICE"]
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          valueFrom:
+            configMapKeyRef:
+              name: ai-titanic-demo-webapp-config
+              key: Environment
+        - name: WebApp__AiApi__BaseUri
+          valueFrom:
+            configMapKeyRef:
+              name: ai-titanic-demo-webapp-config
+              key: BaseUri
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-titanic-demo-api
+  namespace: ai-titanic-demo
+  labels:
+    app: ai-titanic-demo-api
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  selector:
+    matchLabels:
+      app: ai-titanic-demo-api
+  template:
+    metadata:
+      labels:
+        app: ai-titanic-demo-api
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: ai-titanic-demo-api
+        image: qbituniverse/ai-titanic-api:latest
+        securityContext:
+          privileged: false
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+            add: ["NET_BIND_SERVICE"]
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "400m"
+        ports:
+        - containerPort: 8000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-titanic-demo-webapp
+  namespace: ai-titanic-demo
+spec:
+  selector:
+    app: ai-titanic-demo-webapp
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-titanic-demo-api
+  namespace: ai-titanic-demo
+spec:
+  selector:
+    app: ai-titanic-demo-api
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+  type: ClusterIP
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-titanic-demo-webapp
+  namespace: ai-titanic-demo
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  tls:
+  - hosts:
+    - demo-aks.domain.com
+    secretName: tls-secret
+  rules:
+  - host: demo-aks.domain.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ai-titanic-demo-webapp
+            port:
+              number: 80
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ai-titanic-demo-webapp-config
+  namespace: ai-titanic-demo
+data:
+  Environment: Production
+  BaseUri: http://ai-titanic-demo-api.ai-titanic-demo.svc.cluster.local

@@ -1,0 +1,4 @@
+namespace: #{ai-titanic.api.namespace}#
+name: #{ai-titanic.api.name}#
+image: #{ai-titanic.api.image}#
+host: #{ai-titanic.api.host}#

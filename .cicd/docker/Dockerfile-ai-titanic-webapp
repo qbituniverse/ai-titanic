@@ -1,0 +1,25 @@
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+
+LABEL version="6.0" \
+	  description="Image to create WebApp for the ai-titanic project" \
+	  maintainer="marcin.narloch@qbituniverse.com"
+
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY ["src/webapp/WebApp/WebApp.csproj", "WebApp/"]
+RUN dotnet restore "WebApp/WebApp.csproj"
+
+COPY src/webapp .
+WORKDIR "/src/WebApp"
+RUN dotnet build "WebApp.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "WebApp.csproj" -c Release -o /app
+
+FROM runtime AS final
+WORKDIR /app
+COPY --from=publish /app .
+
+ENTRYPOINT ["dotnet", "WebApp.dll"]
