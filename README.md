@@ -1,6 +1,6 @@
 # ai-titanic
 
-**ai-titanic** is built entirely on container technology with [Docker](https://www.docker.com). To be able to run the code from the [ai-titanic GitHub](https://github.com/qbituniverse/ai-titanic) repository, all you need on your local workstation is [Docker Installation](https://docs.docker.com/get-docker/).
+**ai-titanic** is built entirely on container technology with [Docker](https://www.docker.com). To be able to run the code from this repository, all you need on your local workstation is [Docker Installation](https://docs.docker.com/get-docker/).
 
 |Documentation|Packages|Showcase|
 |-----|-----|-----|

@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 
-LABEL version="6.0" \
+LABEL version="8.0" \
 	  description="Image to create WebApi for the ai-titanic project" \
 	  maintainer="marcin.narloch@qbituniverse.com"
 
