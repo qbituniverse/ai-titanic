@@ -4,13 +4,13 @@
 
 |Documentation|Packages|Showcase|
 |-----|-----|-----|
-|[Project Overview](./docs/overview.md)|[DockerHub Api Image](https://hub.docker.com/repository/docker/qbituniverse/ai-titanic-api)|[Gallery](./docs/gallery.md)|
-|[Project Description](./docs/description.md)|[DockerHub Webapp Image](https://hub.docker.com/repository/docker/qbituniverse/ai-titanic-webapp)||
-|[R Model Code Overview](./docs/model.md)|||
-|[C# Webapi Code Overview](./docs/webapi.md)|||
-|[C# Webapp Code Overview](./docs/webapp.md)|||
-|[Development Process](./docs/development.md)|||
-|[Deployment Process](./docs/deployment.md)|||
+|[Project Overview](/docs/overview.md)|[DockerHub Api Image](https://hub.docker.com/repository/docker/qbituniverse/ai-titanic-api)|[Gallery](/docs/gallery.md)|
+|[Project Description](/docs/description.md)|[DockerHub Webapp Image](https://hub.docker.com/repository/docker/qbituniverse/ai-titanic-webapp)||
+|[R Model Code Overview](/docs/model.md)|||
+|[C# Webapi Code Overview](/docs/webapi.md)|||
+|[C# Webapp Code Overview](/docs/webapp.md)|||
+|[Development Process](/docs/development.md)|||
+|[Deployment Process](/docs/deployment.md)|||
 
 ### Try ai-titanic Now
 
